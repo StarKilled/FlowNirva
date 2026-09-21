@@ -64,6 +64,15 @@
     box.appendChild(frag);
   }
 
+  const musica = document.getElementById("musica");
+
+seed.addEventListener("click", () => {
+    musica.currentTime = 0;
+    musica.play().catch(() => {});
+
+    // aquí sigue todo tu código actual de la flor
+});
+
   /* ---------- La flor ---------- */
   const NS = 'http://www.w3.org/2000/svg';
   function svgEl(tag, attrs) {
