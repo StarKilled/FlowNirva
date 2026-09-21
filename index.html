@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Para Nirvana</title>
+  <meta name="description" content="Una flor y una carta para Nirvana.">
+  <meta name="theme-color" content="#150d38">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%BB%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Parisienne&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Cielo de fondo -->
+  <div class="sky" aria-hidden="true">
+    <div class="stars" id="stars"></div>
+  </div>
+
+  <main class="scene" id="scene">
+
+    <!-- Textos de arriba -->
+    <header class="titles">
+      <p class="t-first">Hoy tengo algo para ti</p>
+      <div class="t-second">
+        <h1 class="name">Nirvana</h1>
+        <p class="date">Feliz 21 de septiembre</p>
+      </div>
+    </header>
+
+    <!-- La flor (se construye con script.js) -->
+    <div class="garden">
+      <svg id="plant" viewBox="0 0 400 710" role="img" aria-label="Una flor amarilla que se abre lentamente" focusable="false">
+        <defs>
+          <linearGradient id="stemGrad" gradientUnits="userSpaceOnUse" x1="0" y1="700" x2="0" y2="240">
+            <stop offset="0" stop-color="#1c5f43"/>
+            <stop offset="1" stop-color="#5fc487"/>
+          </linearGradient>
+          <linearGradient id="leafGrad" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stop-color="#2b7f55"/>
+            <stop offset="1" stop-color="#66cc8e"/>
+          </linearGradient>
+          <linearGradient id="petalOuter" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#f19a00"/>
+            <stop offset=".55" stop-color="#ffc61a"/>
+            <stop offset="1" stop-color="#ffe14f"/>
+          </linearGradient>
+          <linearGradient id="petalInner" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#ffb000"/>
+            <stop offset=".6" stop-color="#ffd633"/>
+            <stop offset="1" stop-color="#fff283"/>
+          </linearGradient>
+          <radialGradient id="discGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#4a2a12"/>
+            <stop offset=".7" stop-color="#6b3d17"/>
+            <stop offset="1" stop-color="#b36d1a"/>
+          </radialGradient>
+          <radialGradient id="haloGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#ffdc50" stop-opacity=".55"/>
+            <stop offset=".45" stop-color="#ffbe3c" stop-opacity=".2"/>
+            <stop offset="1" stop-color="#ffb43c" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <g class="sway">
+          <!-- Resplandor detrás de la flor -->
+          <g transform="translate(205 240)">
+            <circle class="halo" r="240" fill="url(#haloGrad)"/>
+          </g>
+
+          <!-- Tallo -->
+          <path class="stem" pathLength="1" stroke="url(#stemGrad)"
+                d="M200 700 C 190 600, 215 480, 203 380 C 194 310, 204 270, 205 240"/>
+
+          <!-- Hojas -->
+          <g transform="translate(198 622)"><g class="leaf" style="--d:.6s"><g transform="scale(-.95 .95)">
+            <path d="M0 0 C 24 -44 86 -66 140 -40 C 116 6 52 24 0 0 Z" fill="url(#leafGrad)"/>
+            <path class="vein" d="M4 -3 C 44 -24 92 -38 132 -38"/>
+          </g></g></g>
+
+          <g transform="translate(202 540)"><g class="leaf" style="--d:1.1s"><g transform="scale(1.08)">
+            <path d="M0 0 C 24 -44 86 -66 140 -40 C 116 6 52 24 0 0 Z" fill="url(#leafGrad)"/>
+            <path class="vein" d="M4 -3 C 44 -24 92 -38 132 -38"/>
+          </g></g></g>
+
+          <g transform="translate(206 458)"><g class="leaf" style="--d:1.6s"><g transform="scale(-.88 .88)">
+            <path d="M0 0 C 24 -44 86 -66 140 -40 C 116 6 52 24 0 0 Z" fill="url(#leafGrad)"/>
+            <path class="vein" d="M4 -3 C 44 -24 92 -38 132 -38"/>
+          </g></g></g>
+
+          <g transform="translate(203 372)"><g class="leaf" style="--d:2.1s"><g transform="scale(.62)">
+            <path d="M0 0 C 24 -44 86 -66 140 -40 C 116 6 52 24 0 0 Z" fill="url(#leafGrad)"/>
+            <path class="vein" d="M4 -3 C 44 -24 92 -38 132 -38"/>
+          </g></g></g>
+
+          <!-- Cabeza de la flor -->
+          <g transform="translate(205 240)">
+            <circle class="bud" r="16" fill="#2f8a5c"/>
+            <g class="head">
+              <g id="sepals"></g>
+              <g id="petalsOuter"></g>
+              <g id="petalsInner"></g>
+              <g class="disk">
+                <circle r="40" fill="url(#discGrad)"/>
+                <circle r="40" fill="none" stroke="#ffb300" stroke-opacity=".55" stroke-width="2"/>
+                <g id="seeds"></g>
+                <ellipse cx="-12" cy="-15" rx="16" ry="8" fill="#fff" opacity=".08" transform="rotate(-30 -12 -15)"/>
+              </g>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Colinas del frente -->
+    <svg class="hills" viewBox="0 0 1440 260" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#5b3390"/>
+          <stop offset="1" stop-color="#2c1a62"/>
+        </linearGradient>
+        <linearGradient id="hillFront" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#2a1760"/>
+          <stop offset="1" stop-color="#150c38"/>
+        </linearGradient>
+      </defs>
+      <path d="M0 120 C 240 40, 480 60, 720 110 C 980 165, 1200 60, 1440 90 L1440 260 L0 260 Z" fill="url(#hillBack)"/>
+      <path d="M0 170 C 200 120, 420 110, 720 130 C 1020 150, 1240 105, 1440 150 L1440 260 L0 260 Z" fill="url(#hillFront)"/>
+    </svg>
+
+    <!-- Luciérnagas -->
+    <div class="flies" id="flies" aria-hidden="true"></div>
+
+    <!-- Semilla: toca para empezar -->
+    <button class="seed" id="seed" type="button" aria-label="Tocar la semilla para hacer florecer la flor">
+      <span></span>
+    </button>
+
+    <div class="actions">
+      <p class="hint">Toca la semilla</p>
+      <button class="letter-btn" id="letterBtn" type="button">Abrir mi carta</button>
+    </div>
+  </main>
+
+  <!-- ✏️ LA CARTA — edita los textos a tu gusto -->
+  <dialog id="letter" aria-labelledby="letterTitle">
+    <button class="close" id="closeLetter" type="button" aria-label="Cerrar carta">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
+    </button>
+
+    <article class="paper">
+      <p class="letter-date line">21 de septiembre de 2026</p>
+
+      <h2 class="greeting line" id="letterTitle">Mi Nirvana,</h2>
+
+<p class="line">Quise regalarte una flor que no se marchitara. Una que pudiera quedarse contigo y recordarte, incluso cuando yo no pueda estar cerca, todo lo que siento por ti. Y esta fue la forma que encontré de hacerlo: una flor que vuelve a abrirse cada vez que la miras.</p>
+
+<p class="line">La hice amarilla porque cuando pienso en ti, pienso en luz. En esa luz que llega después de un día difícil y hace que todo se sienta un poquito mejor. Y creo que eso eres para mí: una persona capaz de hacer especial algo tan sencillo como una conversación, un mensaje o simplemente verte sonreír.</p>
+
+<p class="line">Hay tantas cosas de ti que me gustan que a veces siento que no sé por dónde empezar. Me encanta tu forma de ser, tu manera de pensar, tu inteligencia, tu forma de mirar las cosas y esos pequeños detalles que te hacen ser tú. Eres tan única que, sinceramente, no creo que exista otra persona como tú en este mundo. Y quizá por eso no puedo evitar quedarme mirándote cuando estás frente a mí. Me pareces hermosa, pero lo que más me enamora es todo lo que hay detrás de esa belleza.</p>
+
+<p class="line">También quiero hablarte de algo que para mí es importante. Sé que he cometido errores. Sé que hubo momentos en los que pude hacer las cosas de otra manera y que quizá te hice sentir cosas que nunca quise hacerte sentir. No quiero esconder eso ni hacer como si no hubiera pasado. Lo reconozco, y lo lamento. Pero también quiero que sepas que todo lo vivido me ha hecho pensar, aprender y querer ser una mejor persona, no solo por ti, sino también por mí.</p>
+
+<p class="line">No quiero prometerte que nunca voy a equivocarme, porque sería mentirte. Lo que sí puedo prometerte es que quiero aprender de mis errores, escucharte, cuidarte y demostrarte con hechos lo que muchas veces no sé explicar con palabras.</p>
+
+<p class="line">Sé que ahora mismo la distancia hace que todo sea más difícil. Tú estás en Ecuador y yo estoy en España, y hay días en los que daría cualquier cosa por poder simplemente estar a tu lado, abrazarte, verte a los ojos y no tener que despedirme a través de una pantalla. Pero, aun así, cuando pienso en ti, la distancia no consigue hacerme sentir menos. Al contrario, me hace darme cuenta de cuánto deseo que algún día podamos estar cerca de verdad.</p>
+
+<p class="line">No sé qué nos tiene preparado la vida. No sé cuándo ni cómo, pero sí sé algo que tengo muy claro: me gustaría vivir muchas cosas contigo. Quiero viajar contigo, conocer el mundo a tu lado, descubrir lugares nuevos, reírnos de las cosas más tontas, apoyarnos cuando las cosas se pongan difíciles y crear recuerdos que algún día podamos mirar hacia atrás y decir: “¿te acuerdas de esto?”</p>
+
+<p class="line">Y si la vida nos da la oportunidad de llegar mucho más lejos, también me gustaría compartir contigo esos sueños grandes que uno no le cuenta a cualquiera. Me gustaría algún día poder casarme contigo, formar una familia, tener hijos y construir un hogar en el que los dos podamos sentir que todo el esfuerzo, toda la distancia y todos los momentos difíciles valieron la pena.</p>
+
+<p class="line">Sé que quizá sea pronto para hablar de un futuro así. Y no quiero que estas palabras sean una presión ni una promesa que tengas que responder. Son simplemente mis sueños, esos que aparecen cuando pienso en ti y en todo lo que podríamos llegar a vivir si algún día nuestros caminos siguen caminando juntos.</p>
+
+<p class="line">Porque no quiero quererte solamente en los días bonitos. Quiero aprender a quererte también en los días difíciles. Quiero conocer cada parte de ti, incluso aquellas que todavía no conozco, y seguir descubriendo por qué eres esa persona que, entre millones de personas en el mundo, consiguió hacer que yo me quedara mirándola de una manera diferente.</p>
+
+<p class="line">Y aunque todavía no pueda llamarte mi novia, hay algo que sí puedo decirte: eres una persona que quiero profundamente en mi vida. Y si algún día me das la oportunidad de llamarte así, quiero que sea porque hemos construido algo bonito, sincero y fuerte, no solamente porque lo deseamos.</p>
+
+<p class="line">Así que hoy, 21 de septiembre, quiero regalarte esta pequeña flor y también un pedacito de todo lo que llevo dentro.</p>
+
+<p class="line">Cuando la mires, recuerda que fue hecha pensando en ti. En tu sonrisa. En tu forma de ser. En lo única que eres. En la distancia que hoy nos separa y en todas esas ganas que tengo de algún día poder estar contigo sin que exista una pantalla, un océano o miles de kilómetros entre nosotros.</p>
+
+<p class="line">No sé qué nos deparará la vida, Nirvana. Pero si algún día me preguntas qué quiero para mi futuro, una de las respuestas que más me gustaría poder darte es muy sencilla:</p>
+
+<p class="line"><strong>Quiero que estés tú.</strong></p>
+
+<p class="line">Te quiero muchísimo. Más de lo que muchas veces sé explicar. Y espero que algún día la vida me permita despertar a tu lado, mirar hacia atrás y saber que todo esto solo fue el comienzo de nuestra historia.</p>
+
+<p class="line">Feliz 21 de septiembre, mi Nirvana.</p>
+
+<div class="sign line">
+  <div>
+    <p class="sign-lead">Con todo mi cariño,</p>
+    <p class="sign-name">Anibal Almeida</p>
+  </div>
+</div>
+
+
+        <!-- Florecita de firma -->
+        <svg class="mini" viewBox="-50 -50 100 100" aria-hidden="true" focusable="false">
+          <defs>
+            <path id="miniPetal" d="M0 -8 C -9 -20 -10 -36 0 -46 C 10 -36 9 -20 0 -8 Z" fill="#ffc81a" stroke="#e39600" stroke-width=".8"/>
+          </defs>
+          <use href="#miniPetal"/>
+          <use href="#miniPetal" transform="rotate(30)"/>
+          <use href="#miniPetal" transform="rotate(60)"/>
+          <use href="#miniPetal" transform="rotate(90)"/>
+          <use href="#miniPetal" transform="rotate(120)"/>
+          <use href="#miniPetal" transform="rotate(150)"/>
+          <use href="#miniPetal" transform="rotate(180)"/>
+          <use href="#miniPetal" transform="rotate(210)"/>
+          <use href="#miniPetal" transform="rotate(240)"/>
+          <use href="#miniPetal" transform="rotate(270)"/>
+          <use href="#miniPetal" transform="rotate(300)"/>
+          <use href="#miniPetal" transform="rotate(330)"/>
+          <circle r="11" fill="#5b3416"/>
+          <circle r="11" fill="none" stroke="#ffb300" stroke-opacity=".6" stroke-width="1.2"/>
+        </svg>
+      </div>
+    </article>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

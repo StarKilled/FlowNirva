@@ -1,0 +1,464 @@
+/* =========================================================
+   Para Nirvana — estilos
+   ========================================================= */
+
+:root {
+  --vh: 1vh;
+  --night: #150d38;
+  --plum: #3a2050;
+  --sun: #ffd426;
+  --sun-deep: #f5a300;
+  --ease-out: cubic-bezier(.2, .8, .2, 1);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+@supports (height: 1svh) {
+  :root { --vh: 1svh; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+  color: #fff3cf;
+  background: var(--night);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+
+/* ---------- Cielo ---------- */
+.sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(120% 60% at 50% 100%, rgba(255, 196, 140, .9) 0%, rgba(255, 140, 150, .5) 35%, rgba(255, 140, 150, 0) 70%),
+    linear-gradient(180deg, var(--night) 0%, #2a1866 38%, #6b3a94 64%, #d0708f 86%, #ffb48a 100%);
+}
+
+.stars { position: absolute; inset: 0; }
+.stars i {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  opacity: .15;
+  animation: twinkle var(--tw, 4s) ease-in-out var(--td, 0s) infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: .15; }
+  50%      { opacity: .9; }
+}
+
+/* ---------- Escena ---------- */
+.scene {
+  position: relative;
+  z-index: 1;
+  height: calc(var(--vh) * 100);
+  overflow: hidden;
+}
+
+/* ---------- Títulos ---------- */
+.titles {
+  position: absolute;
+  top: calc(var(--vh) * 5 + var(--safe-top));
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  padding: 0 1rem;
+  text-align: center;
+  pointer-events: none;
+}
+.titles > * { grid-area: 1 / 1; }
+
+.t-first {
+  font-style: italic;
+  font-size: clamp(1.3rem, 4.6vw, 1.8rem);
+  color: #ffe9b0;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+.scene.ready:not(.grow) .t-first { opacity: 1; }
+
+.t-second {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 1.8s ease, transform 1.8s var(--ease-out), visibility 0s linear 1.8s;
+}
+.scene.done .t-second {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 1.8s ease, transform 1.8s var(--ease-out), visibility 0s;
+}
+
+.name {
+  font-family: 'Parisienne', 'Snell Roundhand', cursive;
+  font-weight: 400;
+  font-size: clamp(3.6rem, 15vw, 6.4rem);
+  line-height: 1.05;
+  color: #fff4c9;
+  text-shadow: 0 0 28px rgba(255, 210, 70, .55), 0 2px 0 rgba(0, 0, 0, .15);
+}
+.date {
+  margin-top: .15rem;
+  font-style: italic;
+  font-size: clamp(1.05rem, 3.6vw, 1.35rem);
+  color: #ffe7b3;
+}
+
+/* ---------- Jardín / flor ---------- */
+.garden {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--vh) * 8);
+  transform: translateX(-50%);
+  height: min(calc(var(--vh) * 78), calc(94vw * 1.775));
+  aspect-ratio: 400 / 710;
+  z-index: 1;
+  pointer-events: none;
+}
+.garden svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sway { transform-origin: 200px 700px; transform-box: view-box; }
+.scene.bloom .sway { animation: sway 9s ease-in-out infinite; }
+@keyframes sway {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(1.3deg); }
+  75%  { transform: rotate(-1.3deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Tallo */
+.stem {
+  fill: none;
+  stroke-width: 9;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 3.2s cubic-bezier(.45, .05, .3, 1);
+}
+.scene.grow .stem { stroke-dashoffset: 0; }
+
+/* Hojas */
+.leaf {
+  transform-origin: 0 0;
+  transform: scale(0) rotate(-25deg);
+  transition: transform 1.6s var(--ease-out) var(--d, 0s);
+}
+.scene.grow .leaf { transform: scale(1) rotate(0deg); }
+.vein {
+  fill: none;
+  stroke: rgba(255, 255, 255, .35);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+/* Capullo */
+.bud {
+  transform-origin: 0 0;
+  transform: scale(0);
+  transition: transform 1s var(--ease-out) 2.4s;
+}
+.scene.grow .bud { transform: scale(1); }
+
+/* Cabeza */
+.head {
+  transform-origin: 0 0;
+  transform: scale(.25);
+  transition: transform 4s var(--ease-out);
+}
+.scene.bloom .head { transform: scale(1); }
+
+.petal {
+  transform-origin: 0 0;
+  transform: scale(.04) rotate(-35deg);
+  opacity: 0;
+  transition: transform 2.6s var(--ease-out) var(--d, 0s), opacity 1.2s ease var(--d, 0s);
+}
+.scene.bloom .petal { transform: scale(1) rotate(0deg); opacity: 1; }
+
+.disk {
+  transform-origin: 0 0;
+  transform: scale(0);
+  transition: transform 2.2s var(--ease-out) 1.6s;
+}
+.scene.bloom .disk { transform: scale(1); }
+
+/* Resplandor */
+.halo {
+  transform-origin: 0 0;
+  transform: scale(.3);
+  opacity: 0;
+  transition: transform 4s var(--ease-out) 1s, opacity 3s ease 1s;
+}
+.scene.bloom .halo { transform: scale(1); opacity: 1; }
+.scene.done .halo { animation: haloPulse 6s ease-in-out infinite; }
+@keyframes haloPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .7; }
+}
+
+/* ---------- Colinas ---------- */
+.hills {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: calc(var(--vh) * 22);
+  pointer-events: none;
+}
+
+/* ---------- Luciérnagas ---------- */
+.flies {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.flies i {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffeaa0;
+  box-shadow: 0 0 10px 3px rgba(255, 226, 120, .65);
+  opacity: 0;
+  animation:
+    drift var(--dur, 10s) ease-in-out var(--delay, 0s) infinite alternate,
+    blink var(--blink, 4s) ease-in-out var(--delay, 0s) infinite;
+}
+@keyframes drift {
+  to { transform: translate(var(--dx, 30px), var(--dy, -40px)); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: .9; }
+}
+
+/* ---------- Semilla ---------- */
+.seed {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--vh) * 11 - 12px);
+  z-index: 4;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.6s ease .6s;
+}
+.scene.ready:not(.grow) .seed { opacity: 1; pointer-events: auto; }
+.scene.grow .seed { transition: opacity .8s ease; }
+
+.seed span {
+  position: absolute;
+  inset: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff6b8, var(--sun) 55%, var(--sun-deep));
+  box-shadow: 0 0 18px 6px rgba(255, 212, 38, .55);
+  animation: seedPulse 2.4s ease-in-out infinite;
+}
+.seed::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 226, 120, .7);
+  animation: ring 2.4s ease-out infinite;
+}
+@keyframes seedPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+@keyframes ring {
+  0%   { transform: scale(.5); opacity: .9; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* ---------- Pista y botón de la carta ---------- */
+.actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--vh) * 3 + var(--safe-bottom));
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.actions > * { grid-area: 1 / 1; }
+
+.hint {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #e9d9ff;
+  opacity: 0;
+  transition: opacity 1.6s ease .8s;
+}
+.scene.ready:not(.grow) .hint { opacity: .9; }
+.scene.grow .hint { transition: opacity .6s ease; }
+
+.letter-btn {
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--plum);
+  background: linear-gradient(180deg, #ffe066, #ffbf1f);
+  border: 0;
+  border-radius: 999px;
+  padding: .85rem 2rem;
+  cursor: pointer;
+  box-shadow: 0 10px 34px rgba(255, 190, 40, .38), inset 0 1px 0 rgba(255, 255, 255, .55);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 1.4s ease .4s, transform 1.4s var(--ease-out) .4s, visibility 0s linear 1.8s;
+}
+.scene.done .letter-btn {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition: opacity 1.4s ease .4s, transform 1.4s var(--ease-out) .4s, visibility 0s;
+}
+.letter-btn:hover { filter: brightness(1.06); }
+
+/* ---------- Carta ---------- */
+dialog {
+  width: min(92vw, 640px);
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--plum);
+  overflow: visible;
+}
+dialog::backdrop {
+  background: rgba(14, 8, 40, .72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+dialog[open] { animation: letterIn .7s var(--ease-out); }
+@keyframes letterIn {
+  from { opacity: 0; transform: translateY(24px) scale(.97); }
+}
+
+.paper {
+  position: relative;
+  max-height: calc(var(--vh) * 88);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1.8rem, 5vw, 3rem) clamp(1.4rem, 5vw, 3rem) clamp(1.8rem, 5vw, 2.6rem);
+  background: linear-gradient(180deg, #fffdf7, #fff6e4);
+  border-radius: 14px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .5), inset 0 0 0 1px rgba(255, 255, 255, .6);
+  font-size: clamp(1.08rem, 2.6vw, 1.22rem);
+  line-height: 1.8;
+}
+.paper p { margin-bottom: 1.1em; }
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  color: var(--plum);
+  background: rgba(58, 32, 80, .08);
+  cursor: pointer;
+  transition: background .2s ease;
+}
+.close:hover { background: rgba(58, 32, 80, .16); }
+.close:focus-visible { outline-color: var(--plum); outline-offset: 2px; }
+
+.letter-date {
+  padding-right: 3rem;
+  font-style: italic;
+  font-size: .95em;
+  color: #7a5a9e;
+}
+.greeting {
+  margin-bottom: .5em;
+  font-family: 'Parisienne', 'Snell Roundhand', cursive;
+  font-weight: 400;
+  font-size: clamp(2.3rem, 8vw, 3.2rem);
+  line-height: 1.15;
+  color: #9a5b00;
+}
+
+.sign {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.8rem;
+}
+.sign p { margin: 0; }
+.sign-lead { font-style: italic; }
+.sign-name {
+  font-family: 'Parisienne', 'Snell Roundhand', cursive;
+  font-size: clamp(2rem, 7vw, 2.6rem);
+  line-height: 1.2;
+  color: #9a5b00;
+}
+.mini { width: 64px; height: 64px; flex: none; }
+
+/* Aparición de la carta, párrafo a párrafo */
+.line { --i: 0; }
+dialog[open] .paper .line {
+  animation: rise .9s var(--ease-out) both;
+  animation-delay: calc(.5s + var(--i) * .35s);
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+/* ---------- Pantallas bajitas (móvil en horizontal) ---------- */
+@media (max-height: 560px) {
+  .name { font-size: 3.2rem; }
+  .t-first { font-size: 1.15rem; }
+}
+
+/* ---------- Menos movimiento ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    transition-delay: 0s !important;
+  }
+  .flies { display: none; }
+}
